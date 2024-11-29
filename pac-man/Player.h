@@ -3,12 +3,22 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
+
+enum Direction
+{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT,
+};
+
 class Player
 {
 private:
 	sf::RectangleShape shape;
 	void initVariables();
 	void initShape(sf::Vector2f position);
+	enum Direction dir;
 	float speed;
 
 public:

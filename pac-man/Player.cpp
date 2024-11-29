@@ -2,7 +2,8 @@
 
 void Player::initVariables()
 {
-	this->speed = 10.0f;
+	this->speed = 1.0f;
+	this->dir = RIGHT;
 }
 
 void Player::initShape(sf::Vector2f position)
@@ -24,18 +25,31 @@ Player::~Player()
 
 void Player::update()
 {
-	//Keyboard Input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	 this->shape.setPosition(sf::Vector2f(this->shape.getPosition().x, this->shape.getPosition().y - speed));
+		dir = UP;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		dir = RIGHT;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		dir = DOWN;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		dir = LEFT;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		this->shape.setPosition(sf::Vector2f(this->shape.getPosition().x - this->speed, this->shape.getPosition().y));
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		this->shape.setPosition(sf::Vector2f(this->shape.getPosition().x, this->shape.getPosition().y + speed));
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		this->shape.setPosition(sf::Vector2f(this->shape.getPosition().x + this->speed, this->shape.getPosition().y));
+	switch (dir)
+	{
+	case UP:
+		this->shape.move(sf::Vector2f(.0f, -speed));
+		break;
+	case RIGHT:
+		this->shape.move(sf::Vector2f(speed, .0f));
+		break;
+	case DOWN:
+		this->shape.move(sf::Vector2f(.0f, speed));
+		break;
+	case LEFT:
+		this->shape.move(sf::Vector2f(-speed, .0f));
+		break;
+	}
 }
 void Player::render(sf::RenderTarget* target)
 {
