@@ -1,22 +1,30 @@
 #include "Player.h"
 
-void Player::initVariables()
+void Player::initVariables(float tileScale)
 {
+	//loading texture
+	if (!this->texture.loadFromFile("Textures/Pac-Man/Pac-Man.png"))
+		std::cout << "Error while loading texture: Player." << std::endl;
+
 	this->speed = 1.0f;
 	this->dir = RIGHT;
+	this->tileScale = tileScale;
 }
 
-void Player::initShape(sf::Vector2f position)
+void Player::initPlayerModel()
 {
-	this->shape.setFillColor(sf::Color(255, 0, 0, 255));
-	this->shape.setSize(sf::Vector2f(100.0f, 100.0f));
-	this->shape.setPosition(position);
+	//Set the texture to the sprite
+	this->sprite.setTexture(this->texture);
+
+	//Resize the sprites
+	this->sprite.scale(sf::Vector2f(this->tileScale, this->tileScale));
+
 }
 
-Player::Player(float x, float y)
+Player::Player(float tileScale)
 {
-	this->initVariables();
-	this->initShape(sf::Vector2f(x, y));
+	this->initVariables(tileScale);
+	this->initPlayerModel();
 }
 
 Player::~Player()
@@ -26,32 +34,32 @@ Player::~Player()
 void Player::update()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		dir = UP;
+		this->dir = UP;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		dir = RIGHT;
+		this->dir = RIGHT;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		dir = DOWN;
+		this->dir = DOWN;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		dir = LEFT;
+		this->dir = LEFT;
 
 
-	switch (dir)
+	switch (this->dir)
 	{
 	case UP:
-		this->shape.move(sf::Vector2f(.0f, -speed));
+		this->sprite.move(sf::Vector2f(.0f, -speed));
 		break;
 	case RIGHT:
-		this->shape.move(sf::Vector2f(speed, .0f));
+		this->sprite.move(sf::Vector2f(speed, .0f));
 		break;
 	case DOWN:
-		this->shape.move(sf::Vector2f(.0f, speed));
+		this->sprite.move(sf::Vector2f(.0f, speed));
 		break;
 	case LEFT:
-		this->shape.move(sf::Vector2f(-speed, .0f));
+		this->sprite.move(sf::Vector2f(-speed, .0f));
 		break;
 	}
 }
 void Player::render(sf::RenderTarget* target)
 {
-	target->draw(this->shape);
+	target->draw(this->sprite);
 }

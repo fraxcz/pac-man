@@ -5,13 +5,19 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.h"
+#include "TileManager.h"
+#define ORIGINALTILESIZE 16
+#define TILESCALE 2
+#define TILESIZE ORIGINALTILESIZE*TILESCALE
+#define NUMBEROFTILES 10
 class Game
 {
 private:
 	sf::RenderWindow* window;
 	sf::Event event;
 	sf::VideoMode videoMode;
-	Player player;
+	Player *player;
+	TileManager tileManager;
 	void initVariables();
 	void initWindow();
 
@@ -22,5 +28,6 @@ public:
 	void pollEvents();
 	void update();
 	void render();
+	void initEntities();
 };
 

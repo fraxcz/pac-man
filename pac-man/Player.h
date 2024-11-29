@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -15,14 +16,15 @@ enum Direction
 class Player
 {
 private:
-	sf::RectangleShape shape;
-	void initVariables();
-	void initShape(sf::Vector2f position);
+	sf::Sprite sprite;
+	sf::Texture texture;
+	void initVariables(float tileScale);
+	void initPlayerModel();
 	enum Direction dir;
 	float speed;
-
+	float tileScale;
 public:
-	Player(float x = .0f, float y = .0f);
+	Player(float tileScale);
 	virtual ~Player();
 	void update();
 	void render(sf::RenderTarget* target);

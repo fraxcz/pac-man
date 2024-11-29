@@ -1,5 +1,4 @@
 #include "Game.h"
-
 void Game::initVariables()
 {
 	this->window = nullptr;
@@ -7,15 +6,20 @@ void Game::initVariables()
 
 void Game::initWindow()
 {
-	this->videoMode.width = 1080;
-	this->videoMode.height = 720;
+	this->videoMode.width = TILESIZE * NUMBEROFTILES;
+	this->videoMode.height = TILESIZE * NUMBEROFTILES;
 	this->window = new sf::RenderWindow(videoMode, "Pac-man", sf::Style::Close);
 	this->window->setFramerateLimit(60);
 
 }
+void Game::initEntities()
+{
+	this->player = new Player((float)TILESCALE);
+}
 
 Game::Game()
 {
+	this->initEntities();
 	this->initVariables();
 	this->initWindow();
 }
@@ -23,6 +27,7 @@ Game::Game()
 Game::~Game()
 {
 	delete this->window;
+	delete this->player;
 }
 
 const bool Game::running() const
@@ -44,13 +49,13 @@ void Game::pollEvents()
 
 void Game::update()
 {
-	this->player.update();
+	this->player->update();
 	this->pollEvents();
 }
 
 void Game::render()
 {
 	this->window->clear();
-	this->player.render(this->window);
+	this->player->render(this->window);
 	this->window->display();
 }
