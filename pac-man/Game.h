@@ -6,10 +6,10 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "TileManager.h"
-#define ORIGINALTILESIZE 16
-#define TILESCALE 2
+#define ORIGINALTILESIZE 16.0f
+#define TILESCALE 2.0f
 #define TILESIZE ORIGINALTILESIZE*TILESCALE
-#define NUMBEROFTILES 10
+#define NUMBEROFTILES 20
 class Game
 {
 private:
@@ -17,7 +17,7 @@ private:
 	sf::Event event;
 	sf::VideoMode videoMode;
 	Player *player;
-	TileManager tileManager;
+	TileManager *tileManager;
 	void initVariables();
 	void initWindow();
 

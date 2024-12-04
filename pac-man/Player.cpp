@@ -5,8 +5,7 @@ void Player::initVariables(float tileScale)
 	//loading texture
 	if (!this->texture.loadFromFile("Textures/Pac-Man/Pac-Man.png"))
 		std::cout << "Error while loading texture: Player." << std::endl;
-
-	this->speed = 1.0f;
+	this->speed = 16.0f;
 	this->dir = RIGHT;
 	this->tileScale = tileScale;
 }

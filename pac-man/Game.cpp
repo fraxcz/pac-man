@@ -9,12 +9,13 @@ void Game::initWindow()
 	this->videoMode.width = TILESIZE * NUMBEROFTILES;
 	this->videoMode.height = TILESIZE * NUMBEROFTILES;
 	this->window = new sf::RenderWindow(videoMode, "Pac-man", sf::Style::Close);
-	this->window->setFramerateLimit(60);
+	this->window->setFramerateLimit(2);
 
 }
 void Game::initEntities()
 {
-	this->player = new Player((float)TILESCALE);
+	this->tileManager = new TileManager();
+	this->player = new Player(TILESCALE);
 }
 
 Game::Game()
@@ -56,6 +57,7 @@ void Game::update()
 void Game::render()
 {
 	this->window->clear();
+	this->tileManager->render(this->window);
 	this->player->render(this->window);
 	this->window->display();
 }
