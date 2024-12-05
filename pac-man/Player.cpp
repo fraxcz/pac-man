@@ -110,7 +110,7 @@ void Player::update()
 	switch (this->spriteDir)
 	{
 	case UP:
-		if (!this->tilemanager->getTile(this->sprite.getPosition().x, this->sprite.getPosition().y - 32.f))
+		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y - 32.f))
 		{
 			this->sprite.move(0.0f, -speed);
 			if (!canChangeDirection)
@@ -120,7 +120,7 @@ void Player::update()
 		}
 		break;
 	case RIGHT:
-		if (!this->tilemanager->getTile(this->sprite.getPosition().x + 32.0f, this->sprite.getPosition().y))
+		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x + 32.0f, this->sprite.getPosition().y))
 			this->sprite.move(speed, 0.0f);
 		{
 			if (!canChangeDirection)
@@ -130,7 +130,7 @@ void Player::update()
 		}
 		break;
 	case DOWN:
-		if (!this->tilemanager->getTile(this->sprite.getPosition().x, this->sprite.getPosition().y + 32.0f))
+		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y + 32.0f))
 		{
 			this->sprite.move(0.0f, speed);
 			if (!canChangeDirection)
@@ -140,7 +140,7 @@ void Player::update()
 		}
 		break;
 	case LEFT:
-		if (!this->tilemanager->getTile(this->sprite.getPosition().x - 32.0f, this->sprite.getPosition().y))
+		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x - 32.0f, this->sprite.getPosition().y))
 		{
 		this->sprite.move(-speed, 0.0f);
 		if (!canChangeDirection)
@@ -156,7 +156,10 @@ void Player::update()
 		canChangeDirection = false;
 	}
 	else
+	{
 		canChangeDirection = true;
+	}
+	this->tilemanager->eat(this->sprite.getPosition().x, this->sprite.getPosition().y);
 }
 void Player::render(sf::RenderTarget* target)
 {

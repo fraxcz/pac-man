@@ -2,7 +2,7 @@
 
 void TileManager::loadTextures()
 {
-std::string textureFiles[16] = {
+std::string textureFiles[17] = {
 		"Textures/Tiles/Background.png",
 		"Textures/Tiles/wall-upright.png",
 		"Textures/Tiles/wall-upleft.png",
@@ -18,9 +18,10 @@ std::string textureFiles[16] = {
 		"Textures/Tiles/wall-up-right-down.png",
 		"Textures/Tiles/wall-right-down-left.png",
 		"Textures/Tiles/wall-down-left-up.png",
-		"Textures/Pac-Man/pellet.png"
+		"Textures/Pac-Man/pellet.png",
+		"Textures/tiles/empty.png"
 };
-for (int i = 0; i < 16; i++)
+for (int i = 0; i < 17; i++)
 {
 	textures[i] = new sf::Texture();
 	if (!this->textures[i]->loadFromFile(textureFiles[i]))
@@ -30,15 +31,30 @@ for (int i = 0; i < 16; i++)
 }
 
 }
+void TileManager::eat(float x, float y)
+{
+	for (int i = 0; i < this->tileMap.size(); i++)
+	{
+		sf::Vector2f pos = tileMap[i].getPosition();
+		if (!tileMap[i].isEaten() && pos.x == x && pos.y == y)
+		{
+			tileMap[i].setTileTexture(textures[16], 2.0f);
+			tileMap[i].eat();
+			this->edible -= 1;
+			return;
+		}
+	}
+}
 void TileManager::render(sf::RenderTarget* target)
 {
 	for (int i = 0; i < tileMap.size(); i++)
 	{
 		this->tileMap[i].render(target);
 	}
+	std::cout << this->edible << std::endl;
 }
 
-bool TileManager::getTile(float x, float y)
+bool TileManager::getTileCollision(float x, float y)
 {
 	for (int i = 0; i < this->tileMap.size(); i++)
 	{
@@ -133,6 +149,7 @@ TileManager::TileManager()
 				break;
 			case '0':
 				this->addTile(textures[15], (float)j * 32.0f, (float)i * 32.0f, false, 2.0f);
+				this->edible += 1;
 				break;
 			}
 		}

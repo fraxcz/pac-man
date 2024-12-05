@@ -11,12 +11,14 @@ class TileManager
 private:
 	sf::Texture* textures[19];
 	std::vector<Tile> tileMap;
+	int edible = 0;
 
 public:
 	TileManager();
 	void addTile(sf::Texture *texture, float x, float y, bool isCollisionable = false, float scale = 1.0f, float deg = 0.0f);
 	void loadTextures();
+	void eat(float x, float y);
 	void render(sf::RenderTarget *target);
-	bool getTile(float x, float y);
+	bool getTileCollision(float x, float y);
 };
 

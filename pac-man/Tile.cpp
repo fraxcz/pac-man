@@ -5,6 +5,11 @@ Tile::Tile(sf::Texture* texture, float x, float y, float scale, float deg, bool 
 	setTileTexture(texture, scale);
 	setPosition(x, y, deg);
 	this->isCollisionable = isCollisionable;
+
+	if (!this->isCollisionable)
+	{
+		this->eaten = false;
+	}
 }
 
 Tile::Tile(float x, float y)
@@ -26,6 +31,17 @@ sf::Vector2f Tile::getPosition()
 	vector.x = this->sprite.getPosition().x;
 	vector.y = this->sprite.getPosition().y;
 	return vector;
+}
+
+bool Tile::isEaten()
+{
+	return this->eaten;
+}
+
+void Tile::eat()
+{
+	if (!this->eaten)
+		this->eaten = true;
 }
 
 void Tile::setTileTexture(sf::Texture *texture, float scale)
