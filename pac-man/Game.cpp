@@ -15,7 +15,7 @@ void Game::initWindow()
 void Game::initEntities()
 {
 	this->tileManager = new TileManager();
-	this->player = new Player(TILESCALE);
+	this->player = new Player(TILESCALE, this->tileManager);
 }
 
 Game::Game()

@@ -14,8 +14,9 @@ private:
 
 public:
 	TileManager();
-	void addTile(sf::Texture *texture, float x, float y, float scale = 1.0f, float deg = 0.0f);
+	void addTile(sf::Texture *texture, float x, float y, bool isCollisionable = false, float scale = 1.0f, float deg = 0.0f);
 	void loadTextures();
 	void render(sf::RenderTarget *target);
+	bool getTile(float x, float y);
 };
 

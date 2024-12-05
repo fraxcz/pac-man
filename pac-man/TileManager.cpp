@@ -38,10 +38,23 @@ void TileManager::render(sf::RenderTarget* target)
 	}
 }
 
-void TileManager::addTile(sf::Texture* texture, float x, float y, float scale, float deg)
+bool TileManager::getTile(float x, float y)
+{
+	for (int i = 0; i < this->tileMap.size(); i++)
+	{
+		sf::Vector2f pos = tileMap[i].getPosition();
+		if (tileMap[i].IsCollisionalbe() && pos.x == x && pos.y == y)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void TileManager::addTile(sf::Texture* texture, float x, float y,bool isCollisionable, float scale, float deg)
 {
 
-	this->tileMap.push_back(Tile(texture, x, y, scale, deg));
+	this->tileMap.push_back(Tile(texture, x, y, scale, deg, isCollisionable));
 }
 
 TileManager::TileManager()
@@ -77,49 +90,49 @@ TileManager::TileManager()
 			switch (map[i][j])
 			{
 			case '-':
-				this->addTile(textures[6], (float) j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[6], (float) j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '|':
-				this->addTile(textures[5], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[5], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '1':
-				this->addTile(textures[3], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[3], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '2':
-				this->addTile(textures[1], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[1], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '3':
-				this->addTile(textures[2], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[2], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '4':
-				this->addTile(textures[4], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[4], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case 'd':
-				this->addTile(textures[7], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[7], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case 'u':
-				this->addTile(textures[8], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[8], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case 'l':
-				this->addTile(textures[9], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[9], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case 'r':
-				this->addTile(textures[10], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[10], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '5':
-				this->addTile(textures[11], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[11], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '6':
-				this->addTile(textures[12], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[12], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '7':
-				this->addTile(textures[13], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[13], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '8':
-				this->addTile(textures[14], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[14], (float)j * 32.0f, (float)i * 32.0f, true, 2.0f);
 				break;
 			case '0':
-				this->addTile(textures[15], (float)j * 32.0f, (float)i * 32.0f, 2.0f);
+				this->addTile(textures[15], (float)j * 32.0f, (float)i * 32.0f, false, 2.0f);
 				break;
 			}
 		}
