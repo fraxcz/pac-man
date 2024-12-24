@@ -60,9 +60,7 @@ bool TileManager::getTileCollision(float x, float y)
 	{
 		sf::Vector2f pos = tileMap[i].getPosition();
 		if (tileMap[i].IsCollisionalbe() && pos.x == x && pos.y == y)
-		{
 			return true;
-		}
 	}
 	return false;
 }
@@ -153,4 +151,10 @@ TileManager::TileManager()
 				break;
 			}
 		}
+}
+
+TileManager::~TileManager()
+{
+	for (int i = 0; i < 19; i++)
+		delete this->textures[i];
 }

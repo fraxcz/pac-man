@@ -24,6 +24,7 @@ private:
 	sf::Texture *texture_right[2];
 	TileManager* tilemanager;
 	bool canChangeDirection = false;
+	bool collision(Direction dir);
 	void initVariables(float tileScale);
 	void initPlayerModel();
 	enum Direction dir;

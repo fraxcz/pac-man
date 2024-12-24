@@ -29,6 +29,7 @@ Game::~Game()
 {
 	delete this->window;
 	delete this->player;
+	delete this->tileManager;
 }
 
 const bool Game::running() const

@@ -74,6 +74,12 @@ void Player::initPlayerModel()
 
 Player::~Player()
 {
+	for (int i = 0; i < 2; ++i) {
+		delete texture_up[i];
+		delete texture_right[i];
+		delete texture_down[i];
+		delete texture_left[i];
+	}
 }
 
 void Player::update()
@@ -94,23 +100,27 @@ void Player::update()
 		switch (this->dir)
 		{
 		case UP:
-			this->spriteDir = UP;
+			if(!collision(UP))
+				this->spriteDir = UP;
 			break;
 		case RIGHT:
-			this->spriteDir = RIGHT;
+			if (!collision(RIGHT))
+				this->spriteDir = RIGHT;
 			break;
 		case DOWN:
-			this->spriteDir = DOWN;
+			if (!collision(DOWN))
+				this->spriteDir = DOWN;
 			break;
 		case LEFT:
-			this->spriteDir = LEFT;
+			if (!collision(LEFT))
+				this->spriteDir = LEFT;
 			break;
 		}
 	}
 	switch (this->spriteDir)
 	{
 	case UP:
-		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y - 32.f))
+		if (!collision(UP))
 		{
 			this->sprite.move(0.0f, -speed);
 			if (!canChangeDirection)
@@ -120,9 +130,9 @@ void Player::update()
 		}
 		break;
 	case RIGHT:
-		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x + 32.0f, this->sprite.getPosition().y))
+		if (!collision(RIGHT))
+		{ 
 			this->sprite.move(speed, 0.0f);
-		{
 			if (!canChangeDirection)
 				this->sprite.setTexture(*texture_right[0]);
 			else
@@ -130,9 +140,10 @@ void Player::update()
 		}
 		break;
 	case DOWN:
-		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y + 32.0f))
+		if (!collision(DOWN))
 		{
 			this->sprite.move(0.0f, speed);
+
 			if (!canChangeDirection)
 				this->sprite.setTexture(*texture_down[0]);
 			else
@@ -140,7 +151,7 @@ void Player::update()
 		}
 		break;
 	case LEFT:
-		if (!this->tilemanager->getTileCollision(this->sprite.getPosition().x - 32.0f, this->sprite.getPosition().y))
+		if (!collision(LEFT))
 		{
 		this->sprite.move(-speed, 0.0f);
 		if (!canChangeDirection)
@@ -164,6 +175,37 @@ void Player::update()
 void Player::render(sf::RenderTarget* target)
 {
 	target->draw(this->sprite);
+}
+
+bool Player::collision(Direction dir)
+{
+	switch (dir)
+	{
+	case UP:
+		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y - 32.f))
+			return true;
+		return false;
+		break;
+
+	case RIGHT:
+		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x + 32.0f, this->sprite.getPosition().y))
+			return true;
+		return false;
+		break;
+
+	case DOWN:
+		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y + 32.0f))
+			return true;
+		return false;
+		break;
+
+	case LEFT:
+		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x - 32.0f, this->sprite.getPosition().y))
+			return true;
+		return false;
+		break;
+	}
+
 }
 
 Player::Player(float tileScale, TileManager* tilemanager)
