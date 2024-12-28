@@ -1,5 +1,9 @@
+#include "Entity.h"
+#include <iostream>
 #include "Player.h"
-void Player::initVariables(float tileScale)
+
+
+Player::Player(float tileScale, TileManager* tilemanager) : Entity(tileScale, tilemanager)
 {
 	std::string filepaths[8] =
 	{
@@ -12,74 +16,7 @@ void Player::initVariables(float tileScale)
 		"Textures/Pac-Man/pacman-left-closed.png",
 		"Textures/Pac-Man/pacman-left-open.png"
 	};
-	//loading texture
-	for (int i = 0; i < 8; i += 2)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			if (i < 2)
-			{
-				this->texture_up[j] = new sf::Texture();
-				if (!this->texture_up[j]->loadFromFile(filepaths[i + j]))
-				{
-					std::cout << "File not found." << std::endl;
-				}
-			}
-
-			else if (i < 4)
-			{
-				this->texture_right[j] = new sf::Texture();
-				if (!this->texture_right[j]->loadFromFile(filepaths[i + j]))
-				{
-					std::cout << "File not found." << std::endl;
-				}
-			}
-
-			else if (i < 6)
-			{
-				this->texture_down[j] = new sf::Texture();
-				if (!this->texture_down[j]->loadFromFile(filepaths[i + j]))
-				{
-					std::cout << "File not found." << std::endl;
-				}
-			}
-
-			else if (i < 8)
-			{
-				this->texture_left[j] = new sf::Texture();
-				if (!this->texture_left[j]->loadFromFile(filepaths[i + j]))
-				{
-					std::cout << "File not found." << std::endl;
-				}
-			}
-		}
-
-	}
-	this->speed = 16.0f;
-	this->dir = RIGHT;
-	this->spriteDir = RIGHT;
-	this->tileScale = tileScale;
-}
-
-void Player::initPlayerModel()
-{
-	//Set the texture to the sprite
-	this->sprite.setTexture(*(this->texture_right[0]));
-
-	//Resize the sprites
-	this->sprite.scale(sf::Vector2f(this->tileScale, this->tileScale));
-	this->sprite.setPosition(32.0f, 32.0f);
-
-}
-
-Player::~Player()
-{
-	for (int i = 0; i < 2; ++i) {
-		delete texture_up[i];
-		delete texture_right[i];
-		delete texture_down[i];
-		delete texture_left[i];
-	}
+	this->initModel(filepaths);
 }
 
 void Player::update()
@@ -92,126 +29,10 @@ void Player::update()
 		this->dir = DOWN;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		this->dir = LEFT;
-
-
-	//change direction
-	if (canChangeDirection)
-	{
-		switch (this->dir)
-		{
-		case UP:
-			if(!collision(UP))
-				this->spriteDir = UP;
-			break;
-		case RIGHT:
-			if (!collision(RIGHT))
-				this->spriteDir = RIGHT;
-			break;
-		case DOWN:
-			if (!collision(DOWN))
-				this->spriteDir = DOWN;
-			break;
-		case LEFT:
-			if (!collision(LEFT))
-				this->spriteDir = LEFT;
-			break;
-		}
-	}
-	switch (this->spriteDir)
-	{
-	case UP:
-		if (!collision(UP))
-		{
-			this->sprite.move(0.0f, -speed);
-			if (!canChangeDirection)
-				this->sprite.setTexture(*texture_up[0]);
-			else
-				this->sprite.setTexture(*texture_up[1]);
-		}
-		break;
-	case RIGHT:
-		if (!collision(RIGHT))
-		{ 
-			this->sprite.move(speed, 0.0f);
-			if (!canChangeDirection)
-				this->sprite.setTexture(*texture_right[0]);
-			else
-				this->sprite.setTexture(*texture_right[1]);
-		}
-		break;
-	case DOWN:
-		if (!collision(DOWN))
-		{
-			this->sprite.move(0.0f, speed);
-
-			if (!canChangeDirection)
-				this->sprite.setTexture(*texture_down[0]);
-			else
-				this->sprite.setTexture(*texture_down[1]);
-		}
-		break;
-	case LEFT:
-		if (!collision(LEFT))
-		{
-		this->sprite.move(-speed, 0.0f);
-		if (!canChangeDirection)
-			this->sprite.setTexture(*texture_left[0]);
-		else
-			this->sprite.setTexture(*texture_left[1]);
-		}
-		break;
-	}
-
-	if (canChangeDirection)
-	{
-		canChangeDirection = false;
-	}
-	else
-	{
-		canChangeDirection = true;
-	}
-	this->tilemanager->eat(this->sprite.getPosition().x, this->sprite.getPosition().y);
+	this->updateModel();
 }
+
 void Player::render(sf::RenderTarget* target)
 {
-	target->draw(this->sprite);
-}
-
-bool Player::collision(Direction dir)
-{
-	switch (dir)
-	{
-	case UP:
-		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y - 32.f))
-			return true;
-		return false;
-		break;
-
-	case RIGHT:
-		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x + 32.0f, this->sprite.getPosition().y))
-			return true;
-		return false;
-		break;
-
-	case DOWN:
-		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x, this->sprite.getPosition().y + 32.0f))
-			return true;
-		return false;
-		break;
-
-	case LEFT:
-		if (this->tilemanager->getTileCollision(this->sprite.getPosition().x - 32.0f, this->sprite.getPosition().y))
-			return true;
-		return false;
-		break;
-	}
-
-}
-
-Player::Player(float tileScale, TileManager* tilemanager)
-{
-	this->tilemanager = tilemanager;
-	this->initVariables(tileScale);
-	this->initPlayerModel();
-	this->canChangeDirection = true;
+	this->renderModel(target);
 }
