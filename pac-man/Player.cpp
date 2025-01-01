@@ -30,6 +30,7 @@ void Player::update()
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		this->dir = LEFT;
 	this->updateModel();
+	this->eat();
 }
 
 void Player::render(sf::RenderTarget* target)

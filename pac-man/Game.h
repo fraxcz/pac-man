@@ -1,11 +1,11 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "TileManager.h"
+#include "Enemy.h"
 #define ORIGINALTILESIZE 16.0f
 #define TILESCALE 2.0f
 #define TILESIZE ORIGINALTILESIZE*TILESCALE
@@ -18,6 +18,7 @@ private:
 	sf::VideoMode videoMode;
 	Player *player;
 	TileManager *tileManager;
+	Enemy* enemy;
 	void initVariables();
 	void initWindow();
 

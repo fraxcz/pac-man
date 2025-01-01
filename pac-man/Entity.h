@@ -27,6 +27,8 @@ protected:
 	void initModel(std::string filepaths[8]);
 	void renderModel(sf::RenderTarget* target);
 	void updateModel();
+	void eat();
+	bool collision(Direction dir);
 private:
 	sf::Sprite sprite;
 	sf::Texture *texture_up[2];
@@ -35,7 +37,6 @@ private:
 	sf::Texture *texture_right[2];
 	TileManager* tilemanager;
 	bool canChangeDirection = false;
-	bool collision(Direction dir);
 	void initVariables(float tileScale);
 	enum Direction spriteDir;
 };

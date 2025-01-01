@@ -16,6 +16,7 @@ void Game::initEntities()
 {
 	this->tileManager = new TileManager();
 	this->player = new Player(TILESCALE, this->tileManager);
+	this->enemy = new Enemy(TILESCALE, this->tileManager, RED);
 }
 
 Game::Game()
@@ -29,6 +30,7 @@ Game::~Game()
 {
 	delete this->window;
 	delete this->player;
+	delete this->enemy;
 	delete this->tileManager;
 }
 
@@ -52,6 +54,7 @@ void Game::pollEvents()
 void Game::update()
 {
 	this->player->update();
+	this->enemy->update();
 	this->pollEvents();
 }
 
@@ -59,6 +62,7 @@ void Game::render()
 {
 	this->window->clear();
 	this->tileManager->render(this->window);
+	this->enemy->render(this->window);
 	this->player->render(this->window);
 	this->window->display();
 }

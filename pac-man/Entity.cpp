@@ -14,7 +14,7 @@ void Entity::initVariables(float tileScale)
 	this->spriteDir = RIGHT;
 	this->tileScale = tileScale;
 }
-
+//load textures and set it to the sprite
 void Entity::initModel(std::string filepaths[8])
 {
 	//loading textures from a file
@@ -147,12 +147,15 @@ void Entity::updateModel()
 	}
 
 	if (canChangeDirection)
-	{
 		canChangeDirection = false;
-	}
+
 	else
-	{
 		canChangeDirection = true;
+}
+void Entity::eat()
+{
+	if (canChangeDirection)
+	{
 		this->tilemanager->eat(this->sprite.getPosition().x, this->sprite.getPosition().y);
 	}
 }
