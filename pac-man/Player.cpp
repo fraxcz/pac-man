@@ -3,7 +3,7 @@
 #include "Player.h"
 
 
-Player::Player(float tileScale, TileManager* tilemanager) : Entity(tileScale, tilemanager)
+Player::Player(float x, float y, float tileScale, TileManager* tilemanager) : Entity(tileScale, tilemanager)
 {
 	std::string filepaths[8] =
 	{
@@ -16,7 +16,7 @@ Player::Player(float tileScale, TileManager* tilemanager) : Entity(tileScale, ti
 		"Textures/Pac-Man/pacman-left-closed.png",
 		"Textures/Pac-Man/pacman-left-open.png"
 	};
-	this->initModel(filepaths);
+	this->initModel(x, y, filepaths);
 }
 
 void Player::update()
@@ -36,4 +36,9 @@ void Player::update()
 void Player::render(sf::RenderTarget* target)
 {
 	this->renderModel(target);
+}
+
+sf::Vector2f Player::getPosition()
+{
+	return this->getEntityPosition();
 }

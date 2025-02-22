@@ -5,13 +5,19 @@ enum Color
 	RED,
 	BLUE,
 	PINK,
-	YELLOW
-};
-class Enemy: public Entity
-{
-public:
-	Enemy(float tileScale, TileManager* tilemanager, enum Color color);
-	void update();
-	void render(sf::RenderTarget* target);
+	ORANGE
 };
 
+class Game;
+
+class Enemy : public Entity
+{
+
+public:
+	Enemy(float x, float y, float tileScale, TileManager* tilemanager, Color color, Game* game);
+	void update();
+	void render(sf::RenderTarget* target);
+
+private:
+	Game* game;
+};

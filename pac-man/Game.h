@@ -6,10 +6,10 @@
 #include "Player.h"
 #include "TileManager.h"
 #include "Enemy.h"
-#define ORIGINALTILESIZE 16.0f
-#define TILESCALE 2.0f
-#define TILESIZE ORIGINALTILESIZE*TILESCALE
-#define NUMBEROFTILES 20
+constexpr float ORIGINALTILESIZE = 16.0f;
+constexpr float TILESCALE = 2.0f;
+constexpr float TILESIZE = ORIGINALTILESIZE * TILESCALE;
+constexpr float NUMBEROFTILES = 19.0f;
 class Game
 {
 private:
@@ -18,17 +18,18 @@ private:
 	sf::VideoMode videoMode;
 	Player *player;
 	TileManager *tileManager;
-	Enemy* enemy;
+	Enemy* enemies[4];
 	void initVariables();
+	void initEntities();
 	void initWindow();
+	void pollEvents();
 
 public:
 	Game();
 	virtual ~Game();
-	const bool running() const;
-	void pollEvents();
+	bool running() const;
 	void update();
 	void render();
-	void initEntities();
+	sf::Vector2f getPlayerPosition();
 };
 

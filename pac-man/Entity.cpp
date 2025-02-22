@@ -15,9 +15,9 @@ void Entity::initVariables(float tileScale)
 	this->tileScale = tileScale;
 }
 //load textures and set it to the sprite
-void Entity::initModel(std::string filepaths[8])
+void Entity::initModel(float x, float y, std::string filepaths[8])
 {
-	//loading textures from a file
+	//loading textures from a file (each entity contains 2 frames to each direction)
 	for (int i = 0; i < 8; i += 2)
 	{
 		for (int j = 0; j < 2; j++)
@@ -62,7 +62,9 @@ void Entity::initModel(std::string filepaths[8])
 
 	//Resize the sprites
 	this->sprite.scale(this->tileScale, this->tileScale);
-	this->sprite.setPosition(32.0f, 32.0f);
+
+	//Set position
+	this->sprite.setPosition(x, y);
 
 }
 
@@ -192,7 +194,12 @@ bool Entity::collision(Direction dir)
 		return false;
 		break;
 	}
+	return true;
+}
 
+sf::Vector2f Entity::getEntityPosition()
+{
+	return this->sprite.getPosition();
 }
 
 Entity::Entity(float tileScale, TileManager* tilemanager)

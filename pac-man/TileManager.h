@@ -9,14 +9,17 @@
 class TileManager
 {
 private:
-	sf::Texture* textures[19];
+	sf::Texture* wallTexture;
+	sf::Texture* pelletTexture;
 	std::vector<Tile> tileMap;
+	std::vector<Tile> pelletMap;
 	int edible = 0;
 
 public:
 	TileManager();
 	~TileManager();
-	void addTile(sf::Texture *texture, float x, float y, bool isCollisionable = false, float scale = 1.0f, float deg = 0.0f);
+	void addTileWall(sf::Texture *texture, sf::Color color, float x, float y, float scale = 1.0f);
+	void addTilePellet(sf::Texture* texture, float x, float y, float scale = 1.0f);
 	void loadTextures();
 	void eat(float x, float y);
 	void render(sf::RenderTarget *target);
